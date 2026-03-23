@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-const shotUrlSchema = new mongoose.Schema({
+const shortUrlSchema = new mongoose.Schema({
     full_url: {
         type: String,
         required: true
@@ -22,6 +22,5 @@ const shotUrlSchema = new mongoose.Schema({
     }
 });
 
-const ShotUrl = mongoose.model('shotUrl', shotUrlSchema);
-
-export default ShotUrl; 
+const ShortUrl = mongoose.model('shortUrl', shortUrlSchema);
+export default ShortUrl; 

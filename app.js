@@ -2,7 +2,8 @@ import express from 'express';
 import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
 import connectDB from './src/config/mongodb.js';
-import URL from './src/config/models/shoturlschema.js';
+import URL from './src/models/url.model.js';
+import short_url from './src/routes/shorturl.routes.js';
 
 dotenv.config();
 
@@ -12,28 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ CREATE SHORT URL
-app.post('/api/create', async (req, res) => {
-    const { url } = req.body;
-
-    if (!url) {
-        return res.status(400).send("URL is required");
-    }
-
-    const shortId = nanoid(6);
-
-    const newUrl = new URL({
-        full_url: url,
-        short_url: shortId
-    });
-
-    await newUrl.save();
-
-    // ✅ send SAME ID
-    res.json({
-        shortId,
-        shortUrl: `http://localhost:3000/${shortId}`
-    });
-});
+app.post('/api/create',short_url);
 
 
 // ✅ REDIRECT
