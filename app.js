@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ CREATE SHORT URL
-app.post('/api/create',short_url);
+app.use('/api/create',short_url);
 
 
 // ✅ REDIRECT
