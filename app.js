@@ -1,10 +1,12 @@
 import express from 'express';
-import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
 import connectDB from './src/config/mongodb.js';
-import URL from './src/models/url.model.js';
-import short_url from './src/routes/shorturl.routes.js';
+import shortUrlRoutes from "./src/routes/shortUrl.routes.js";  // ✅                              // ✅
 import { redirectFromShortUrl } from './src/controller/short.url.controller.js';
+
+import cors from 'cors';
+
+app.use(cors({ origin: 'http://localhost:5173' })); 
 
 dotenv.config();
 
@@ -14,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ CREATE SHORT URL
-app.use('/api/create',short_url);
+app.use('/api/create', shortUrlRoutes);
 
 
 // ✅ REDIRECT

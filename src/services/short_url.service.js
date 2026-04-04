@@ -1,14 +1,15 @@
-import { generateNanoId } from "../utils/helper.js";
-import UrlModel from "../models/url.model.js";
-import { saveShortUrl } from "../config/dao/short.url.js";
+import { generateNanoId } from "../utils/helper.js";        // ✅
+import { saveShortUrl } from "../config/dao/short.url.js";  // ✅
 
-export const createShortUrlWithoutUser = async(url)=>{
-    const shortUrl = await generateNanoId(8);
-    await saveShortUrl(shortUrl, url);
-    return shortUrl;
-}
-export const createShortUrlWithUser = async(url, userId)=>{
-    const shortUrl = await generateNanoId(8);
-    await saveShortUrl(shortUrl,url, userId);
-    return shortUrl;
-}
+
+export const createShortUrlWithoutUser = async (url) => {
+    const shortId = await generateNanoId(8);
+    const savedUrl = await saveShortUrl(shortId, url);  // ✅ capture returned doc
+    return savedUrl;                                     // ✅ return the full document
+};
+
+export const createShortUrlWithUser = async (url, userId) => {
+    const shortId = await generateNanoId(8);
+    const savedUrl = await saveShortUrl(shortId, url, userId);  // ✅
+    return savedUrl;                                             // ✅
+};
