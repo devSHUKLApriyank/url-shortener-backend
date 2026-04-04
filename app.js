@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './src/config/mongodb.js';
 import URL from './src/models/url.model.js';
 import short_url from './src/routes/shorturl.routes.js';
+import { redirectFromShortUrl } from './src/controller/short.url.controller.js';
 
 dotenv.config();
 
@@ -17,17 +18,7 @@ app.use('/api/create',short_url);
 
 
 // ✅ REDIRECT
-app.get('/:id', async (req, res) => {
-    const { id } = req.params;
-
-    const entry = await URL.findOne({ short_url: id });
-
-    if (entry) {
-        return res.redirect(entry.full_url);
-    } else {
-        return res.status(404).send('URL not found');
-    }
-});
+app.get('/:id', redirectFromShortUrl);
 
 
 // ✅ START SERVER AFTER DB
