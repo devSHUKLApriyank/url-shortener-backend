@@ -1,10 +1,16 @@
+import { cookiesOptions } from "../config/config.js";
+import { registerUser as registerUserService, loginUser as loginUserService } from "../services/auth.service.js";
+
 export const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
-    const user = await registerUser(name, email, password);
-    res.status(201).json(user);
+    const token = await registerUserService(name, email, password);
+    res.cookie('AccessToken', token, cookiesOptions);
+    res.status(201).json({ message: "User registered successfully" });
 };
 
 export const loginUser = async (req, res) => {
-    res.send('login'); 
-    
+    const { email, password } = req.body;
+    const token = await loginUserService(email, password);
+    res.cookie('AccessToken', token, cookiesOptions);
+    res.status(200).json({ message: "User logged in successfully" });
 };
