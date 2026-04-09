@@ -2,7 +2,6 @@ import { verifyToken } from "../utils/helper.js";
 import { findUserById } from "../config/dao/user.dao.js";
 
 export const authMiddleware = async(req, res, next) => {
-    console.log("COOKIES:", req.cookies); // ✅ move here
     const token = req.cookies.accesstoken;
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
