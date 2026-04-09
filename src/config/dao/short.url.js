@@ -27,4 +27,10 @@ export const getShortUrl = async (shortUrl) => {
         { returnDocument: true }                   // ✅ return updated document
     );
 };
+
+
+export const getCustomShortUrl= async (slug) => {
+    return await UrlModel.findOne({ short_url:slug });
+   
+}
   

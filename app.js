@@ -5,16 +5,19 @@ import shortUrlRoutes from "./src/routes/shortUrl.routes.js";
 import auth_routes from "./src/routes/auth.route.js";
 import { redirectFromShortUrl } from './src/controller/short.url.controller.js';
 import cors from 'cors';
-import { errorHandler } from './src/middlewares/errorHandler.js';
+import { errorHandler } from './src/middleware/errorHandler.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(cors({ origin: ['http://localhost:5173'] })); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/api/auth", auth_routes); 
 app.use('/api/create', shortUrlRoutes);
 app.get('/:id', redirectFromShortUrl);
 app.use(errorHandler);
+
 
 connectDB().then(() => {
     app.listen(3000, () => {
