@@ -4,6 +4,7 @@ import { registerUser as registerUserService, loginUser as loginUserService } fr
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+          
         const token = await registerUserService(name, email, password);
 
        
@@ -17,8 +18,8 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log(' login attempt:', { email, password })
         const token = await loginUserService(email, password);
-
         
         res.cookie('accesstoken', token, cookiesOptions); 
         res.status(200).json({ message: "User logged in successfully" });

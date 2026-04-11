@@ -1,4 +1,3 @@
-import e from "express";
 import User from "../../models/user.model.js";
 
 export const findUserByEmail = async (email) => {
