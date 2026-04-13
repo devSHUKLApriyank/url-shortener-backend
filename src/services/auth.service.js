@@ -20,15 +20,20 @@ export const registerUser = async (name, email, password) => {
 };
 
 export const loginUser = async (email, password) => {
-    const user = await findUserByEmail(email);
-    console.log('User found:', user)
-    if (!user) {
-        throw new UnauthorizedError('Invalid Credentials');
+    try {
+        const user = await findUserByEmail(email);
+        console.log('User found:', user ? 'yes' : 'no')
+        if (!user) throw new UnauthorizedError('Invalid Credentials');
+
+        const isMatch = await user.comparePassword(password);
+        console.log('Password match:', isMatch)
+        if (!isMatch) throw new UnauthorizedError('Invalid Credentials');
+
+        const token = signToken({ id: user._id });
+        console.log('Token generated:', token ? 'yes' : 'no')
+        return token;
+    } catch (err) {
+        console.log('Service error:', err.message)
+        throw err
     }
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-        throw new UnauthorizedError('Invalid Credentials');
-    }
-    const token = signToken({ id: user._id });
-    return token;
 };

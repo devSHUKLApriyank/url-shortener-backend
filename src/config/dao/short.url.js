@@ -34,3 +34,10 @@ export const getCustomShortUrl= async (slug) => {
    
 }
   
+export const getUrlsByUserId = async (userId) => {
+    return await UrlModel.find({ user: userId }).sort({ createdAt: -1 })
+}
+
+export const deleteUrlById = async (id, userId) => {
+    return await UrlModel.findOneAndDelete({ _id: id, user: userId })
+}
